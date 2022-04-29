@@ -37,7 +37,7 @@ get_device_serial() {
 
     adb_devices=$(adb devices -l)
     # echo "adb_devices: ${adb_devices}"
-    usb_device_serial=$(echo "${adb_devices}" | grep -w device | grep -v '\.' | awk '{print $1}')
+    usb_device_serial=$(echo "${adb_devices}" | grep -w device | awk '{print $1}')
     # get USB connected device serial
 
     echo "${usb_device_serial}"
@@ -60,7 +60,7 @@ check_usb_connection() {
 
         # echo "usb_device_serial: ${usb_device_serial}"
 
-        usb_device=$(adb devices -l | grep -w device | grep -v '\.' | awk -F: '{print $4}' | awk '{print $1}')
+        usb_device=$(adb devices -l | grep -w device | awk -F: '{print $4}' | awk '{print $1}')
         # get device name
 
         # echo "usb_device: ${usb_device}"
@@ -444,11 +444,11 @@ echo ""
 socket=$(adb devices -l | grep ${port} | awk '{print $1}')
 # try to get attached device wlan0 ip, even if offline
 
-echo "Disconnecting adb devices.."
-adb disconnect >/dev/null
-# upon reboot, sometimes even if connected, shell will give "error: closed" on first attempt, but on second will work. Need to disconnect and reconnect to make sure the connection is ok. At this point any previous attatched devices will no longer be attatched.
-echo "DEBUG> killing adb server.."
-adb kill-server
+# echo "Disconnecting adb devices.."
+# adb disconnect >/dev/null
+# # upon reboot, sometimes even if connected, shell will give "error: closed" on first attempt, but on second will work. Need to disconnect and reconnect to make sure the connection is ok. At this point any previous attatched devices will no longer be attatched.
+# echo "DEBUG> killing adb server.."
+# adb kill-server
 
 
 if [ -z "${socket}" ]; then
